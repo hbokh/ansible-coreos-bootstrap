@@ -17,8 +17,8 @@ host-01
 host-02
 
 [coreos:vars]
-ansible_ssh_user=core
-ansible_python_interpreter="PATH=/home/core/bin:$PATH python"
+#ansible_ssh_user=core
+ansible_python_interpreter="PATH=/opt/bin:$PATH python"
 ```
 
 This will configure ansible to use the python interpreter at `/home/core/bin/python` which will be created by the coreos-bootstrap role.
@@ -29,6 +29,7 @@ Now you can simply add the following to your playbook file and include it in you
 
 ```yaml
 - hosts: coreos
+  sudo: true
   gather_facts: False
   roles:
     - defunctzombie.coreos-bootstrap

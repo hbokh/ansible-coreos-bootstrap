@@ -2,7 +2,9 @@
 
 set -e
 
-cd
+INSTALL=/opt
+
+cd $INSTALL
 
 if [[ -e $HOME/.bootstrapped ]]; then
   exit 0
@@ -14,17 +16,17 @@ wget -O - https://bitbucket.org/pypy/pypy/downloads/pypy-$PYPY_VERSION-linux64.t
 mv -n pypy-$PYPY_VERSION-linux64 pypy
 
 ## library fixup
-mkdir -p pypy/lib
-ln -snf /lib64/libncurses.so.5.9 $HOME/pypy/lib/libtinfo.so.5
+mkdir -p $INSTALL/pypy/lib
+ln -snf /lib64/libncurses.so.5.9 $INSTALL/pypy/lib/libtinfo.so.5
 
-mkdir -p $HOME/bin
+mkdir -p $INSTALL/bin
 
-cat > $HOME/bin/python <<EOF
+cat > $INSTALL/bin/python <<EOF
 #!/bin/bash
-LD_LIBRARY_PATH=$HOME/pypy/lib:$LD_LIBRARY_PATH exec $HOME/pypy/bin/pypy "\$@"
+LD_LIBRARY_PATH=$INSTALL/pypy/lib:$LD_LIBRARY_PATH exec $INSTALL/pypy/bin/pypy "\$@"
 EOF
 
-chmod +x $HOME/bin/python
-$HOME/bin/python --version
+chmod +x $INSTALL/bin/python
+$INSTALL/bin/python --version
 
 touch $HOME/.bootstrapped
