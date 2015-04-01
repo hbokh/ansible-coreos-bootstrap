@@ -4,6 +4,8 @@ set -e
 
 INSTALL=/opt
 
+mkdir -p $INSTALL
+
 cd $INSTALL
 
 if [[ -e $HOME/.bootstrapped ]]; then
